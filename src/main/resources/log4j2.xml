@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="log-path">logs</Property>
+		<Property name="archive-path">${log-path}/archive</Property>
+		<Property name="lgFilePrefix">${sys:hostAddress:-/var/logs}</Property>
+		<Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss.SSSZ}{GMT+5:30}|[%level]|%c{1}.%M() line%L|RID:%X{RequestId}| %m%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout>
+				<Pattern>${logPattern}</Pattern>
+			</PatternLayout>
+		</Console>
+		<RollingFile name="mainlog"
+					 fileName="${log-path}/mainLog-${lgFilePrefix}.log"
+					 filePattern="${archive-path}/mainLog-${lgFilePrefix}.%d{yyyy-MM-dd}.%i.log.gz"
+					 ignoreExceptions="false">
+			<PatternLayout>
+				<Pattern>${logPattern}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<DefaultRolloverStrategy max="300000" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="DEBUG" additivity="false">
+			<AppenderRef ref="console" level="INFO" />
+			<AppenderRef ref="mainlog" level="INFO" />
+		</Root>
+		<Logger name="org.springframework.aop.interceptor.PerformanceMonitorInterceptor" level="TRACE" additivity="false">
+			<Appender-ref ref="console" level="TRACE" />
+			<AppenderRef ref="mainlog" level="DEBUG" />
+		</Logger>
+		<Logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG" additivity="false">
+			<Appender-ref ref="console" level="DEBUG" />
+		</Logger>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,8 @@
+2019-06-14 23:16:25.576+0530|[INFO]|MongodbApplication.logStarting() line50|RID:| Starting MongodbApplication on 03281-009L with PID 13536 (D:\My\Project\accio_go\Sample\mongodb\target\classes started by Eshan_zincat in D:\My\Project\accio_go\Sample\mongodb)
+2019-06-14 23:16:25.590+0530|[INFO]|MongodbApplication.logStartupProfileInfo() line675|RID:| No active profile set, falling back to default profiles: default
+2019-06-14 23:16:29.401+0530|[INFO]|RepositoryConfigurationDelegate.registerRepositoriesIn() line126|RID:| Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-14 23:16:29.621+0530|[INFO]|RepositoryConfigurationDelegate.registerRepositoriesIn() line182|RID:| Finished Spring Data repository scanning in 184ms. Found 2 repository interfaces.
+2019-06-14 23:16:32.264+0530|[INFO]|TomcatWebServer.initialize() line90|RID:| Tomcat initialized with port(s): 8450 (http)
+2019-06-14 23:16:32.315+0530|[INFO]|Http11NioProtocol.log() line173|RID:| Initializing ProtocolHandler ["http-nio-8450"]
+2019-06-14 23:16:32.348+0530|[INFO]|StandardService.log() line173|RID:| Starting service [Tomcat]
+2019-06-14 23:16:32.350+0530|[INFO]|StandardEngine.log() line173|RID:| Starting Servlet engine: [Apache Tomcat/9.0.19]
