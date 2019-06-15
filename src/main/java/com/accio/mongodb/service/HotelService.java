@@ -1,8 +1,10 @@
 package com.accio.mongodb.service;
 
 import com.accio.mongodb.entity.Hotels;
+import com.accio.mongodb.entity.QHotels;
 import com.accio.mongodb.repository.HotelRepository;
 import com.accio.mongodb.utilities.HttpStatusEnum;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -113,6 +115,110 @@ public class HotelService {
         }
 
 
+
+    }
+
+    public JSONObject findByCity(String city) throws Exception {
+
+        JSONObject response = new JSONObject();
+        List<Hotels> hotels = this.hotelRepository.findByCity(city);
+
+        if (hotels.size() !=0){
+
+            response.put("resultCode", "N/A");
+            response.put("resultShortDesc", "SUCCESSFULLY_RETURN_THE_HOTELS_DETAILS");
+            response.put("resultDescription", "SUCCESSFULLY RETURN_THE HOTELS_DETAILS");
+            response.put("resultData", hotels);
+            response.put("httpStatusCode", HttpStatusEnum.OK.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.OK.getDescription());
+            return response;
+
+        }else {
+
+            response.put("resultCode", "N/A");
+            response.put("resultShortDesc", "HOTEL_NOT_FOUND");
+            response.put("resultDescription", "HOTEL NOT FOUND");
+            response.put("httpStatusCode", HttpStatusEnum.NOTFOUND.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.NOTFOUND.getDescription());
+            return response;
+
+        }
+
+    }
+
+    public JSONObject findByCountry(String country) throws Exception {
+
+        JSONObject response = new JSONObject();
+
+        // create a query class (QHotel)
+        QHotels qHotel = new QHotels("hotels");
+
+        // using the query class we can create the filters
+        BooleanExpression filterByCountry = qHotel.address.any().country.eq(country);
+
+        // we can then pass the filters to the findAll() method
+        List<Hotels> hotels = (List<Hotels>) this.hotelRepository.findAll(filterByCountry);
+
+        if (hotels.size() !=0){
+
+            response.put("resultCode", "N/A");
+            response.put("resultShortDesc", "SUCCESSFULLY_RETURN_THE_HOTELS_DETAILS");
+            response.put("resultDescription", "SUCCESSFULLY RETURN_THE HOTELS_DETAILS");
+            response.put("resultData", hotels);
+            response.put("httpStatusCode", HttpStatusEnum.OK.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.OK.getDescription());
+            return response;
+
+        }else {
+
+            response.put("resultCode", "N/A");
+            response.put("resultShortDesc", "HOTEL_NOT_FOUND");
+            response.put("resultDescription", "HOTEL NOT FOUND");
+            response.put("httpStatusCode", HttpStatusEnum.NOTFOUND.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.NOTFOUND.getDescription());
+            return response;
+
+        }
+
+    }
+
+    public JSONObject getRecommendedHotel() throws Exception {
+
+        JSONObject response = new JSONObject();
+
+        final int maxPrice = 100;
+        final int minRating = 7;
+
+        // create a query class (QHotel)
+        QHotels qHotel = new QHotels("hotels");
+
+        // using the query class we can create the filters
+        BooleanExpression filterByPrice = qHotel.pricePerNight.lt(maxPrice);
+        BooleanExpression filterByRating = qHotel.reviews.any().rating.gt(minRating);
+
+        // we can then pass the filters to the findAll() method
+        List<Hotels> hotels = (List<Hotels>) this.hotelRepository.findAll(filterByPrice.and(filterByRating));
+
+        if (hotels.size() !=0){
+
+            response.put("resultCode", "N/A");
+            response.put("resultShortDesc", "SUCCESSFULLY_RETURN_THE_HOTELS_DETAILS");
+            response.put("resultDescription", "SUCCESSFULLY RETURN_THE HOTELS_DETAILS");
+            response.put("resultData", hotels);
+            response.put("httpStatusCode", HttpStatusEnum.OK.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.OK.getDescription());
+            return response;
+
+        }else {
+
+            response.put("resultCode", "N/A");
+            response.put("resultShortDesc", "HOTEL_NOT_FOUND");
+            response.put("resultDescription", "HOTEL NOT FOUND");
+            response.put("httpStatusCode", HttpStatusEnum.NOTFOUND.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.NOTFOUND.getDescription());
+            return response;
+
+        }
 
     }
 }

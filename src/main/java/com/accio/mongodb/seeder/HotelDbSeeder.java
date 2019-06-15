@@ -61,7 +61,7 @@ public class HotelDbSeeder implements CommandLineRunner {
         );
 
         // drop all hotels
-//        this.hotelRepository.deleteAll();
+        this.hotelRepository.deleteAll();
 
         //add our hotels to the database
         List<Hotels> hotels = Arrays.asList(marriot, ibis, sofitel);

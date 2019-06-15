@@ -197,4 +197,103 @@ public class HotelController {
     }
 
 
+    /**
+     * @des find by hotel according to the city
+     * @return method return data goes here
+     * @throws Exception
+     */
+    @LogExecutionTime
+    @GetMapping(value = "/address/{city}", produces = "application/json")
+    public ResponseEntity<String> findByCity(@PathVariable String city) throws JSONException {
+        StringBuilder chainLog = new StringBuilder()
+                .append("|ReqBdy: city" + city);
+        ResponseEntity<String> responseEntity = null;
+        JSONObject response = new JSONObject();
+
+        try {
+            response = hotelService.findByCity(city);
+            chainLog.append("|FinalResponse:").append(response);
+            LOGGER.info(chainLog.toString());
+            return responseEntity.status((Integer) response.get("httpStatusCode")).body(response.toString());
+        } catch (Exception ex){
+
+            response.put("resultCode", HttpStatusEnum.GENERALERROR.getCode());
+            response.put("resultShortDesc", HttpStatusEnum.GENERALERROR.getDescription());
+            response.put("resultDescription", ex.getMessage());
+            response.put("httpStatusCode", HttpStatusEnum.INTERNALERROR.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.INTERNALERROR.getDescription());
+
+            chainLog.append("|FinalResponse:").append(response).append("|Exp:");
+            LOGGER.error(chainLog.toString(), ex);
+            return responseEntity.status((Integer) response.get("httpStatusCode")).body(response.toString());
+
+        }
+    }
+
+    /**
+     * @des find by hotel according to the country
+     * @return method return data goes here
+     * @throws Exception
+     */
+    @LogExecutionTime
+    @GetMapping(value = "/country/{country}", produces = "application/json")
+    public ResponseEntity<String> findByCountry(@PathVariable String country) throws JSONException {
+        StringBuilder chainLog = new StringBuilder()
+                .append("|ReqBdy: country" + country);
+        ResponseEntity<String> responseEntity = null;
+        JSONObject response = new JSONObject();
+
+        try {
+            response = hotelService.findByCountry(country);
+            chainLog.append("|FinalResponse:").append(response);
+            LOGGER.info(chainLog.toString());
+            return responseEntity.status((Integer) response.get("httpStatusCode")).body(response.toString());
+        } catch (Exception ex){
+
+            response.put("resultCode", HttpStatusEnum.GENERALERROR.getCode());
+            response.put("resultShortDesc", HttpStatusEnum.GENERALERROR.getDescription());
+            response.put("resultDescription", ex.getMessage());
+            response.put("httpStatusCode", HttpStatusEnum.INTERNALERROR.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.INTERNALERROR.getDescription());
+
+            chainLog.append("|FinalResponse:").append(response).append("|Exp:");
+            LOGGER.error(chainLog.toString(), ex);
+            return responseEntity.status((Integer) response.get("httpStatusCode")).body(response.toString());
+
+        }
+    }
+
+    /**
+     * @des find by hotel according to the country
+     * @return method return data goes here
+     * @throws Exception
+     */
+    @LogExecutionTime
+    @GetMapping(value = "/recommended", produces = "application/json")
+    public ResponseEntity<String> getRecommendedHotel() throws JSONException {
+        StringBuilder chainLog = new StringBuilder()
+                .append("|ReqBdy:" );
+        ResponseEntity<String> responseEntity = null;
+        JSONObject response = new JSONObject();
+
+        try {
+            response = hotelService.getRecommendedHotel();
+            chainLog.append("|FinalResponse:").append(response);
+            LOGGER.info(chainLog.toString());
+            return responseEntity.status((Integer) response.get("httpStatusCode")).body(response.toString());
+        } catch (Exception ex){
+
+            response.put("resultCode", HttpStatusEnum.GENERALERROR.getCode());
+            response.put("resultShortDesc", HttpStatusEnum.GENERALERROR.getDescription());
+            response.put("resultDescription", ex.getMessage());
+            response.put("httpStatusCode", HttpStatusEnum.INTERNALERROR.getCode());
+            response.put("httpStatusDesc", HttpStatusEnum.INTERNALERROR.getDescription());
+
+            chainLog.append("|FinalResponse:").append(response).append("|Exp:");
+            LOGGER.error(chainLog.toString(), ex);
+            return responseEntity.status((Integer) response.get("httpStatusCode")).body(response.toString());
+
+        }
+    }
+
 }
