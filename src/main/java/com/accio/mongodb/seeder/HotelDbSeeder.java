@@ -1,8 +1,6 @@
 package com.accio.mongodb.seeder;
 
-import com.accio.mongodb.entity.Address;
 import com.accio.mongodb.entity.Hotels;
-import com.accio.mongodb.entity.Review;
 import com.accio.mongodb.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

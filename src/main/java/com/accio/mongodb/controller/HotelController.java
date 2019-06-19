@@ -31,6 +31,7 @@ public class HotelController {
 
     /**
      * @des get all hotels
+     * @param  param goes here
      * @return method return data goes here
      * @throws Exception
      */

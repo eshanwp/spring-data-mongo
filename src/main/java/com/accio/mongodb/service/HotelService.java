@@ -4,9 +4,11 @@ import com.accio.mongodb.entity.Hotels;
 import com.accio.mongodb.entity.QHotels;
 import com.accio.mongodb.repository.HotelRepository;
 import com.accio.mongodb.utilities.HttpStatusEnum;
+import com.accio.mongodb.utilities.ResponsePayload;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -21,17 +23,34 @@ public class HotelService {
     @Autowired
     private HotelRepository hotelRepository;
 
-    public JSONObject getAllHotels() throws Exception{
+    private JSONObject createResponse(
+            String resultCode,
+            String resultShortDesc,
+            String resultDescription,
+            List resultData,
+            int httpStatusCode,
+            String httpStatusDesc
+    ){
         JSONObject response = new JSONObject();
+        response.put("resultCode", resultCode);
+        response.put("resultShortDesc", resultShortDesc);
+        response.put("resultDescription", resultDescription);
+        response.put("resultData", resultData);
+        response.put("httpStatusCode", httpStatusCode);
+        response.put("httpStatusDesc", httpStatusDesc);
+        return response;
+
+    }
+
+    public JSONObject getAllHotels() throws Exception{
+
         List<Hotels> hotelsList =  hotelRepository.findAll();
 
-        response.put("resultCode", "N/A");
-        response.put("resultShortDesc", "SUCCESSFULLY_RETURN_THE HOTELS_DETAILS");
-        response.put("resultDescription", "SUCCESSFULLY RETURN THE HOTELS DETAILS");
-        response.put("resultData", hotelsList);
-        response.put("httpStatusCode", HttpStatusEnum.OK.getCode());
-        response.put("httpStatusDesc", HttpStatusEnum.OK.getDescription());
-        return response;
+        return new ResponsePayload.Builder(HttpStatus.OK)
+                .addPayloadAttr("resCode","N/A")
+                .addPayloadAttr("resDes","SUCCESSFULLY RETURN THE HOTELS DETAILS")
+                .addPayloadAttr("resData", hotelsList)
+                .build();
 
     }
 
